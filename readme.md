@@ -6,10 +6,20 @@ O objetivo deste projeto é investigar se a quebra estrutural e o salto de produ
 
 ## 🗂️ Estrutura do Repositório
 
-* **`/data`**: Contém os dados brutos extraídos via API e as bases harmonizadas prontas para modelagem.
-* **`/scripts`**: Códigos em Python para extração (ETL), processamento, modelagem contrafactual e visualização.
-* **`/results`**: Tabelas finais contendo a quantificação do choque estrutural percentual por país e setor.
-* **`/plots`**: Gráficos gerados para a análise visual da quebra estrutural.
+* **`/data`**: Contém os dados brutos extraídos via API e as bases harmonizadas.
+* **`/scripts`**: 
+    * `extract_oecd.py`: Extração via API SDMX da OCDE.
+    * `process_oecd.py`: Limpeza e cálculo da Produtividade do Trabalho.
+    * `model_counterfactual.py`: Modelagem de tendência pré-pandemia por país/setor.
+    * `model_bloc_aggregation.py`: Agregação das 4 maiores economias (EUA, FRA, DEU, ITA) num bloco único.
+    * `model_multi_blocos.py`: Análise comparativa entre G7, Zona do Euro e Zona do Pacífico.
+    * `model_americas.py`: Foco específico nas economias da OCDE no continente americano.
+    * `model_servicos_blocos.py`: Decomposição do choque nos serviços de Informação (J) e Finanças (K).
+    * `model_servicos_agregados.py`: Análise do macro-setor de serviços (H-U), excluindo o comércio.
+    * `plot_counterfactual.py`: Geração de gráficos de quebra estrutural.
+    * `format_spreadsheet.py`: Exportação dos resultados em formato Excel profissional.
+* **`/results`**: Tabelas finais de choques percentuais e planilhas formatadas.
+* **`/plots`**: Visualizações das "bocas de jacaré" (descolamento da produtividade).
 
 ## ⚙️ Fontes de Dados
 
@@ -25,27 +35,23 @@ Para reproduzir os achados deste estudo, siga a ordem de execução dos scripts 
 
 pip install -r requirements.txt
 
-**2. Extração e Tratamento de Dados:**
+**2. Execução do Pipeline:**
 
-python scripts/extract_oecd.py: Conecta à API da OCDE e extrai os dados brutos em formato .csv.
+1. Execute python scripts/extract_oecd.py para baixar os dados.
 
-python scripts/process_oecd.py: Limpa os dados, estrutura a base (pivot table) e calcula a métrica principal: Produtividade do Trabalho (Valor Adicionado / Empregados).
+2. Execute python scripts/process_oecd.py para gerar a base produtividade.
 
-**3. Modelagem Econômica:**
-
-python scripts/model_counterfactual.py: Utiliza regressão linear nos dados de 2015-2019 para projetar a tendência contrafactual pré-pandemia e mede o choque estrutural efetivo a partir de 2020.
-
-**4. Testes e Visualização:**
-
-python scripts/test_comercio.py: Isola e testa os resultados específicos do Setor de Comércio (ISIC G).
-
-python scripts/test_industria.py: Isola e testa os resultados específicos da Indústria de Transformação (ISIC C) para fins de controle e contraste empírico.
-
-python scripts/plot_counterfactual.py: Gera os gráficos de séries temporais demonstrando o descolamento da produtividade real em relação à tendência histórica.
-
-python scripts/format_spreadsheet.py: Formata os resultados finais numa planilha amigável (.xlsx) com padrões financeiros.
+3. Para análises de blocos (o coração da expansão internacional), execute os scripts iniciados por model_....
 
 ## 📊 Principais Descobertas
 
-O modelo comprova internacionalmente a tese observada no Brasil: o setor de Comércio apresentou um forte choque estrutural positivo (ex: +19% nos EUA e +15% na França em 2022), enquanto a Indústria de Transformação permaneceu estagnada em relação à sua tendência histórica, evidenciando o impacto assimétrico da transformação digital global.
+A expansão internacional validou a tese brasileira:
+
+* **Comércio (Setor G):** Apresentou um choque estrutural positivo global, com destaque para o bloco das Américas (+20,3%) e G7 (+15%).
+
+* **Tecnologia (Setor J):** Registou choque negativo ou estagnação em todos os blocos, evidenciando um inchaço nas contratações (labor hoarding) que superou os ganhos de produtividade.
+
+* **Finanças (Setor K):** Foi o grande vencedor da digitalização nos serviços corporativos, com saltos de produtividade superiores a 12% no G7.
+
+* **Indústria (Setor C):** Demonstrou estagnação ou crescimento limitado devido aos gargalos logísticos globais.
 
