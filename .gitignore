@@ -1,0 +1,28 @@
+# Ambientes Virtuais (Essencial para não subir gigabytes de bibliotecas)
+.venv/
+venv/
+env/
+
+# Ficheiros temporários e de cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações de Editores de Código (VS Code, PyCharm, etc)
+.vscode/
+.idea/
+*.swp
+
+# Ficheiros do Sistema Operativo (Windows/Mac)
+.DS_Store
+Thumbs.db
+
+# ----------------------------------------------------------------------
+# DADOS E RESULTADOS (Opcional)
+# Se os seus ficheiros CSV na pasta 'data/' forem muito grandes (acima de 50MB), 
+# o GitHub pode bloqueá-los. Se preferir não partilhar os dados brutos e manter 
+# o repositório apenas com os scripts de código, retire o '#' das linhas abaixo:
+# ----------------------------------------------------------------------
+# data/
+# results/
+# plots/
